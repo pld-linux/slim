@@ -1,7 +1,7 @@
 %define	cvs_release 20030830
 Summary:	slim headers for Cairo
 Name:		slim
-Version:	0
+Version:	0.1.0
 Release:	0.%{cvs_release}.1
 License:	BSD-like
 Group:		Development/Libraries
