@@ -22,7 +22,7 @@ SLIM (Shared Library Interface Macros) to makra dla interfejsów
 bibliotek dzielonych, u¿ywane przez bibliotekê Cairo.
 
 %prep
-%setup -n %{name}
+%setup -q -n %{name}
 %patch0 -p1
 
 %build
