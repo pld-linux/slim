@@ -1,12 +1,13 @@
-%define	cvs_release 20030830
+%define	cvs_release 20030906
 Summary:	slim headers for Cairo
 Name:		slim
-Version:	0.1.0
+Version:	0.1.1
 Release:	0.%{cvs_release}.1
 License:	BSD-like
 Group:		Development/Libraries
 Source0:	%{name}-cvs-%{cvs_release}.tar.gz
-# Source0-md5:	229742924af4abfdc4cfc2e5c7ca15e8
+Patch0:		%{name}-version.patch
+# Source0-md5:	517699deb4a25a7789611feca3668f9c
 URL:		http://cairographics.org/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -14,6 +15,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 "slim" headers for Cairo
 
 %prep
+%patch1 -p1
 %setup -n %{name}
 
 %build
