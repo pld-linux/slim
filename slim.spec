@@ -1,14 +1,12 @@
-%define	cvs_release 20030906
 Summary:	Shared Library Interface Macros
 Summary(pl):	Makra dla interfejsów bibliotek dzielonych
 Name:		slim
-Version:	0.1.1
-Release:	0.%{cvs_release}.1
+Version:	0.2.0
+Release:	1
 License:	BSD-like
 Group:		Development/Libraries
-Source0:	%{name}-cvs-%{cvs_release}.tar.gz
-Patch0:		%{name}-version.patch
-# Source0-md5:	517699deb4a25a7789611feca3668f9c
+Source0:	http://cairographics.org/snapshots/%{name}-%{version}.tar.gz
+# Source0-md5:	acc800ad7b8dab6fe6c9a95dd38f4a4b
 URL:		http://cairographics.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -22,8 +20,7 @@ SLIM (Shared Library Interface Macros) to makra dla interfejsów
 bibliotek dzielonych, u¿ywane przez bibliotekê Cairo.
 
 %prep
-%setup -q -n %{name}
-%patch0 -p1
+%setup -q
 
 %build
 %{__aclocal}
