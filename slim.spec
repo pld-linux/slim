@@ -1,5 +1,6 @@
 %define	cvs_release 20030906
-Summary:	slim headers for Cairo
+Summary:	Shared Library Interface Macros
+Summary(pl):	Makra dla interfejsów bibliotek dzielonych
 Name:		slim
 Version:	0.1.1
 Release:	0.%{cvs_release}.1
@@ -9,10 +10,16 @@ Source0:	%{name}-cvs-%{cvs_release}.tar.gz
 Patch0:		%{name}-version.patch
 # Source0-md5:	517699deb4a25a7789611feca3668f9c
 URL:		http://cairographics.org/
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-"slim" headers for Cairo
+Shared Library Interface Macros used by Cairo library.
+
+%description -l pl
+SLIM (Shared Library Interface Macros) to makra dla interfejsów
+bibliotek dzielonych, u¿ywane przez bibliotekê Cairo.
 
 %prep
 %setup -n %{name}
@@ -20,15 +27,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %build
 %{__aclocal}
-%{__automake} --add-missing
+%{__automake}
 %{__autoconf}
 %configure
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-# create directories if necessary
-#install -d $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -38,6 +43,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS COPYING ChangeLog README
 %{_includedir}/*
-%{_libdir}/pkgconfig/*
+%{_pkgconfigdir}/*.pc
