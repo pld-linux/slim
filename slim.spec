@@ -15,8 +15,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 "slim" headers for Cairo
 
 %prep
-%patch0 -p0
 %setup -n %{name}
+%patch0 -p1
 
 %build
 %{__aclocal}
