@@ -1,0 +1,4 @@
+# Customized settings for slim
+
+# Define nice level for slim
+SERVICE_RUN_NICE_LEVEL="+0"
