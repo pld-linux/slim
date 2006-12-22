@@ -78,7 +78,7 @@ Mo¿liwo¶ci:
 	CC="%{__cc}" \
 	CXX="%{__cxx}" \
 	CFLAGS="%{rpmcflags}" \
-	LDFLAGS="%{rpmldflags} -L/usr/X11R6/%{_lib}" \
+	LDFLAGS="%{rpmldflags}" \
 	CFGDIR=%{_sysconfdir}/X11/slim
 
 %install
