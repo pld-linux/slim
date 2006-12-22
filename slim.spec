@@ -10,6 +10,7 @@ Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
 Source1:	%{name}.pamd
 Source2:	%{name}.init
 Source3:	%{name}.sysconfig
+Patch0:		%{name}-Makefile.patch
 URL:		http://slim.berlios.de/
 BuildRequires:	XFree86-devel
 BuildRequires:	freetype-devel
@@ -18,7 +19,6 @@ BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig >= 1:0.19
-BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires:	mktemp
 Requires:	pam >= 0.79.0
@@ -69,9 +69,14 @@ Mo¿liwo¶ci:
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__make} \
+	CC="%{__cc}" \
+	CXX="%{__cxx}" \
+	CFLAGS="%{rpmcflags}" \
+	LDFLAGS="%{rpmldflags} -L/usr/X11R6/%{_lib}" \
 	CFGDIR=%{_sysconfdir}/X11/slim
 
 %install
