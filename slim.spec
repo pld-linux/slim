@@ -115,7 +115,7 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/slim/slim.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/slim
 %attr(754,root,root) /etc/rc.d/init.d/slim
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.sliw
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/slim
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man1/slim.1*
