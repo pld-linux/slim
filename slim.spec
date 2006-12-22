@@ -75,7 +75,7 @@ Mo¿liwo¶ci:
 %{__make} \
 	CC="%{__cc}" \
 	CXX="%{__cxx}" \
-	CFLAGS="%{rpmcflags}" \
+	CFLAGS="%{rpmcflags} -I/usr/X11R6/include" \
 	LDFLAGS="%{rpmldflags} -L/usr/X11R6/%{_lib}" \
 	CFGDIR=%{_sysconfdir}/X11/slim
 
