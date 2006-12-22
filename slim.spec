@@ -11,15 +11,13 @@ Source1:	%{name}.pamd
 Source2:	%{name}.init
 Source3:	%{name}.sysconfig
 URL:		http://slim.berlios.de/
+BuildRequires:	XFree86-devel
 BuildRequires:	freetype-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig >= 1:0.19
-BuildRequires:	xorg-lib-libXft-devel
-BuildRequires:	xorg-lib-libXmu-devel
-BuildRequires:	xorg-lib-libXrender-devel
 BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires:	mktemp
