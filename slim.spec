@@ -1,5 +1,5 @@
-Summary:	SLiM is a desktop-independent graphical login managaer
-Summary(pl):	SLiM to niezale¿ny od ¶rodowiska graficzny zarz±dca logowania
+Summary:	SLiM - a desktop-independent graphical login managaer
+Summary(pl):	SLiM - niezale¿ny od ¶rodowiska graficzny zarz±dca logowania
 Name:		slim
 Version:	1.2.6
 Release:	1
@@ -52,19 +52,19 @@ SLiM jest niezale¿nym od ¶rodowiska graficznym zarz±dc± ekranów dla
 X11 bêd±cym
 
 W za³o¿eniu ma byæ lekki i prosty, i jednocze¶nie ca³kowicie
-konfigurowywalny za pomoc± motywów i pliku konfigracyjnego; jest
-przeznczaony dla maszyn, na których funkcjonalno¶æ zdalnego logowania
+konfigurowalny za pomoc± motywów i pliku konfiguracyjnego; jest
+przeznaczony dla maszyn, na których funkcjonalno¶æ zdalnego logowania
 nie jest potrzebna.
 
 Mo¿liwo¶ci:
-- wsparcie PNG i XFT dla przezroczysto¶ci alpha oraz czcionek
-  antialiasingowanych,
-- wsparcie dla dodatkowych motywówo,
-- konfigurowywalne opcje: serwer X, polecenia do logowania, wy³±czania
+- obs³uga PNG i XFT dla przezroczysto¶ci alpha oraz czcionek
+  antialiasowanych,
+- wsparcie dla dodatkowych motywów,
+- konfigurowalne opcje: serwer X, polecenia do logowania, wy³±czania
   oraz restartu komputera,
 - pojedyncza (jak w GDM) lub podwójna (jak w XDM) kontrola wej¶cia,
 - mo¿liwo¶æ automatycznego zalogowania danego u¿ytkownika,
-- konfigurowywalne komunikaty powitania / po¿egnania,
+- konfigurowalne komunikaty powitania / po¿egnania,
 - losowy wybór motywu.
 
 %prep
