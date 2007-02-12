@@ -1,5 +1,5 @@
 Summary:	SLiM - a desktop-independent graphical login managaer
-Summary(pl):	SLiM - niezaleøny od ∂rodowiska graficzny zarz±dca logowania
+Summary(pl.UTF-8):   SLiM - niezale≈ºny od ≈õrodowiska graficzny zarzƒÖdca logowania
 Name:		slim
 Version:	1.2.6
 Release:	2
@@ -49,25 +49,25 @@ Features included:
 - Configurable welcome / shutdown messages
 - Random theme selection
 
-%description -l pl
-SLiM jest niezaleønym od ∂rodowiska graficznym zarz±dc± ekranÛw dla
-X11 bÍd±cym
+%description -l pl.UTF-8
+SLiM jest niezale≈ºnym od ≈õrodowiska graficznym zarzƒÖdcƒÖ ekran√≥w dla
+X11 bƒôdƒÖcym
 
-W za≥oøeniu ma byÊ lekki i prosty, i jednocze∂nie ca≥kowicie
-konfigurowalny za pomoc± motywÛw i pliku konfiguracyjnego; jest
-przeznaczony dla maszyn, na ktÛrych funkcjonalno∂Ê zdalnego logowania
+W za≈Ço≈ºeniu ma byƒá lekki i prosty, i jednocze≈õnie ca≈Çkowicie
+konfigurowalny za pomocƒÖ motyw√≥w i pliku konfiguracyjnego; jest
+przeznaczony dla maszyn, na kt√≥rych funkcjonalno≈õƒá zdalnego logowania
 nie jest potrzebna.
 
-Moøliwo∂ci:
-- obs≥uga PNG i XFT dla przezroczysto∂ci alpha oraz czcionek
+Mo≈ºliwo≈õci:
+- obs≈Çuga PNG i XFT dla przezroczysto≈õci alpha oraz czcionek
   antyaliasowanych,
-- wsparcie dla dodatkowych motywÛw,
-- konfigurowalne opcje: serwer X, polecenia do logowania, wy≥±czania
+- wsparcie dla dodatkowych motyw√≥w,
+- konfigurowalne opcje: serwer X, polecenia do logowania, wy≈ÇƒÖczania
   oraz restartu komputera,
-- pojedyncza (jak w GDM) lub podwÛjna (jak w XDM) kontrola wej∂cia,
-- moøliwo∂Ê automatycznego zalogowania danego uøytkownika,
-- konfigurowalne komunikaty powitania / poøegnania,
-- losowy wybÛr motywu.
+- pojedyncza (jak w GDM) lub podw√≥jna (jak w XDM) kontrola wej≈õcia,
+- mo≈ºliwo≈õƒá automatycznego zalogowania danego u≈ºytkownika,
+- konfigurowalne komunikaty powitania / po≈ºegnania,
+- losowy wyb√≥r motywu.
 
 %prep
 %setup -q
