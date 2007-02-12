@@ -1,5 +1,5 @@
 Summary:	SLiM - a desktop-independent graphical login managaer
-Summary(pl.UTF-8):   SLiM - niezależny od środowiska graficzny zarządca logowania
+Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
 Version:	1.2.6
 Release:	2
