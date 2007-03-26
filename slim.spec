@@ -2,28 +2,25 @@ Summary:	SLiM - a desktop-independent graphical login managaer
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
 Version:	1.2.6
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
 # Source0-md5:	1bf891f046014a03236c21ce6cbe455b
-Source1:	%{name}.pamd
-Source2:	%{name}.init
-Source3:	%{name}.sysconfig
+Source1:	%{name}.init
+Source2:	%{name}.sysconfig
 Patch0:		%{name}-Makefile.patch
 URL:		http://slim.berlios.de/
 BuildRequires:	freetype-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	pam-devel
 BuildRequires:	pkgconfig >= 1:0.19
 BuildRequires:	xorg-lib-libXft-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXrender-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires:	mktemp
-Requires:	pam >= 0.99.7.1
 Requires:	rc-scripts
 Obsoletes:	gdm
 Obsoletes:	kdm
@@ -89,9 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 	MANDIR=%{_mandir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -D %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/%{name}
-install -D %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-install -D %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
+install -D %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+install -D %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 install -d $RPM_BUILD_ROOT/etc/security
 :> $RPM_BUILD_ROOT/etc/security/blacklist.slim
 
@@ -118,7 +114,6 @@ fi
 %doc ChangeLog README THEMES TODO xinitrc.sample
 %dir %{_sysconfdir}/X11/slim
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/slim/slim.conf
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/slim
 %attr(754,root,root) /etc/rc.d/init.d/slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/slim
