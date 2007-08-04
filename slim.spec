@@ -2,7 +2,7 @@ Summary:	SLiM - a desktop-independent graphical login managaer
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
 Version:	1.2.6
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
@@ -22,10 +22,6 @@ BuildRequires:	xorg-lib-libXrender-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires:	mktemp
 Requires:	rc-scripts
-Obsoletes:	gdm
-Obsoletes:	kdm
-Obsoletes:	wdm
-Obsoletes:	xdm
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
