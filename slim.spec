@@ -1,15 +1,20 @@
+#
+# TODO:
+# - update slim-configuration.patch for pending WM-s
+#
 Summary:	SLiM - a desktop-independent graphical login managaer
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
-Version:	1.2.6
-Release:	4
+Version:	1.3.0
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
-# Source0-md5:	1bf891f046014a03236c21ce6cbe455b
+# Source0-md5:	1c1a87f3cbd3c334c874585e42701961
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
-Patch0:		%{name}-Makefile.patch
+Patch0:		%{name}-configuration.patch
+Patch1:		%{name}-Makefile.patch
 URL:		http://slim.berlios.de/
 BuildRequires:	freetype-devel
 BuildRequires:	libjpeg-devel
@@ -65,6 +70,7 @@ Możliwości:
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__make} \
@@ -98,6 +104,10 @@ if [ -f /var/lock/subsys/slim ]; then
 else
 	echo "Run \"/sbin/service slim start\" to start slim." >&2
 fi
+cat << EOF
+NOTE: You need to prepare ~/.xinitrc to make slim work.
+Take a look at %{_docdir}/%{name}-%{version}/xinitrc.example
+EOF
 
 %preun
 if [ "$1" = "0" ]; then
