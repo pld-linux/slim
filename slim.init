@@ -21,22 +21,22 @@ fi
 start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/slim ]; then
-		msg_starting "SLiM Display Manager"
+		msg_starting "X Display Manager"
 		daemon slim -d
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/slim
 	else
-		msg_already_running "SLiM Display Manager"
+		msg_already_running "X Display Manager"
 	fi
 }
 
 stop() {
 	if [ -f /var/lock/subsys/slim ]; then
-		msg_stopping "SLiM Display Manager"
+		msg_stopping "X Display Manager"
 		killproc slim
 		rm -f /var/lock/subsys/slim
 	else
-		msg_not_running "SLiM Display Manager"
+		msg_not_running "X Display Manager"
 	fi
 }
 
