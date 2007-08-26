@@ -22,7 +22,7 @@ start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/slim ]; then
 		msg_starting "SLiM Display Manager"
-		daemon slim -d
+		daemon --fork slim
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/slim
 	else
