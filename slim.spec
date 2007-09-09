@@ -27,6 +27,7 @@ BuildRequires:	xorg-lib-libXrender-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires:	mktemp
 Requires:	rc-scripts
+Provides:	XDM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
