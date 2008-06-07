@@ -1,27 +1,29 @@
+#
+# TODO:
+# - update slim-configuration.patch for pending WM-s
+#
 Summary:	SLiM - a desktop-independent graphical login managaer
-Summary(pl):	SLiM - niezale¿ny od ¶rodowiska graficzny zarz±dca logowania
+Summary(pl.UTF-8):	SLiM - niezaleÅ¼ny od Å›rodowiska graficzny zarzÄ…dca logowania
 Name:		slim
-Version:	1.2.6
+Version:	1.3.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
-# Source0-md5:	1bf891f046014a03236c21ce6cbe455b
-Source1:	%{name}.pamd
-Source2:	%{name}.init
-Source3:	%{name}.sysconfig
-Patch0:		%{name}-Makefile.patch
+# Source0-md5:	1c1a87f3cbd3c334c874585e42701961
+Source1:	%{name}.init
+Source2:	%{name}.sysconfig
+Patch0:		%{name}-configuration.patch
+Patch1:		%{name}-Makefile.patch
 URL:		http://slim.berlios.de/
 BuildRequires:	XFree86-devel
 BuildRequires:	freetype-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	pam-devel
 BuildRequires:	pkgconfig >= 1:0.19
 Requires(post,preun):	/sbin/chkconfig
 Requires:	mktemp
-Requires:	pam >= 0.79.0
 Requires:	rc-scripts
 Obsoletes:	gdm
 Obsoletes:	kdm
@@ -47,29 +49,30 @@ Features included:
 - Configurable welcome / shutdown messages
 - Random theme selection
 
-%description -l pl
-SLiM jest niezale¿nym od ¶rodowiska graficznym zarz±dc± ekranów dla
-X11 bêd±cym
+%description -l pl.UTF-8
+SLiM jest niezaleÅ¼nym od Å›rodowiska graficznym zarzÄ…dcÄ… ekranÃ³w dla
+X11 bÄ™dÄ…cym
 
-W za³o¿eniu ma byæ lekki i prosty, i jednocze¶nie ca³kowicie
-konfigurowalny za pomoc± motywów i pliku konfiguracyjnego; jest
-przeznaczony dla maszyn, na których funkcjonalno¶æ zdalnego logowania
+W zaÅ‚oÅ¼eniu ma byÄ‡ lekki i prosty, i jednoczeÅ›nie caÅ‚kowicie
+konfigurowalny za pomocÄ… motywÃ³w i pliku konfiguracyjnego; jest
+przeznaczony dla maszyn, na ktÃ³rych funkcjonalnoÅ›Ä‡ zdalnego logowania
 nie jest potrzebna.
 
-Mo¿liwo¶ci:
-- obs³uga PNG i XFT dla przezroczysto¶ci alpha oraz czcionek
-  antialiasowanych,
-- wsparcie dla dodatkowych motywów,
-- konfigurowalne opcje: serwer X, polecenia do logowania, wy³±czania
+MoÅ¼liwoÅ›ci:
+- obsÅ‚uga PNG i XFT dla przezroczystoÅ›ci alpha oraz czcionek
+  antyaliasowanych,
+- wsparcie dla dodatkowych motywÃ³w,
+- konfigurowalne opcje: serwer X, polecenia do logowania, wyÅ‚Ä…czania
   oraz restartu komputera,
-- pojedyncza (jak w GDM) lub podwójna (jak w XDM) kontrola wej¶cia,
-- mo¿liwo¶æ automatycznego zalogowania danego u¿ytkownika,
-- konfigurowalne komunikaty powitania / po¿egnania,
-- losowy wybór motywu.
+- pojedyncza (jak w GDM) lub podwÃ³jna (jak w XDM) kontrola wejÅ›cia,
+- moÅ¼liwoÅ›Ä‡ automatycznego zalogowania danego uÅ¼ytkownika,
+- konfigurowalne komunikaty powitania / poÅ¼egnania,
+- losowy wybÃ³r motywu.
 
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__make} \
@@ -87,9 +90,8 @@ rm -rf $RPM_BUILD_ROOT
 	MANDIR=%{_mandir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -D %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/%{name}
-install -D %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-install -D %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
+install -D %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+install -D %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 install -d $RPM_BUILD_ROOT/etc/security
 :> $RPM_BUILD_ROOT/etc/security/blacklist.slim
 
@@ -104,6 +106,10 @@ if [ -f /var/lock/subsys/slim ]; then
 else
 	echo "Run \"/sbin/service slim start\" to start slim." >&2
 fi
+cat << EOF
+NOTE: You need to prepare ~/.xinitrc to make slim work.
+Take a look at %{_docdir}/%{name}-%{version}/xinitrc.example
+EOF
 
 %preun
 if [ "$1" = "0" ]; then
@@ -116,7 +122,6 @@ fi
 %doc ChangeLog README THEMES TODO xinitrc.sample
 %dir %{_sysconfdir}/X11/slim
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/slim/slim.conf
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/slim
 %attr(754,root,root) /etc/rc.d/init.d/slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/slim
