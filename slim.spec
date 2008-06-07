@@ -50,7 +50,7 @@ Features included:
 
 %description -l pl.UTF-8
 SLiM jest niezależnym od środowiska graficznym zarządcą ekranów dla
-X11 będącym
+X11 wzorowanym na Login.app
 
 W założeniu ma być lekki i prosty, i jednocześnie całkowicie
 konfigurowalny za pomocą motywów i pliku konfiguracyjnego; jest
