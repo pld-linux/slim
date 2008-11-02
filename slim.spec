@@ -2,7 +2,7 @@
 # TODO:
 # - update slim-configuration.patch for pending WM-s
 #
-Summary:	SLiM - a desktop-independent graphical login managaer
+Summary:	SLiM - a desktop-independent graphical login manager
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
 Version:	1.3.0
