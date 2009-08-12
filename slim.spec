@@ -15,6 +15,8 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-configuration.patch
 Patch1:		%{name}-Makefile.patch
+Patch2:		%{name}-stdlib.patch
+Patch3:		%{name}-stdio.patch
 URL:		http://slim.berlios.de/
 BuildRequires:	freetype-devel
 BuildRequires:	libjpeg-devel
@@ -72,6 +74,8 @@ Możliwości:
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %{__make} \
