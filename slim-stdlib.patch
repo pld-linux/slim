@@ -1,0 +1,10 @@
+--- slim-1.3.0-orig/cfg.cpp	2007-07-15 16:09:28.000000000 +0200
++++ slim-1.3.0/cfg.cpp	2009-08-12 15:03:59.438266181 +0200
+@@ -12,6 +12,7 @@
+ #include <string>
+ #include <iostream>
+ #include <unistd.h>
++#include <stdlib.h>
+ 
+ #include <sys/types.h>
+ #include <sys/stat.h>
