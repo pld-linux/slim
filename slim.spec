@@ -5,23 +5,23 @@
 Summary:	SLiM - a desktop-independent graphical login manager
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
-Version:	1.3.1
-Release:	2
+Version:	1.3.2
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
-# Source0-md5:	727d0acb24c0fbf0751134c37a9c895f
+# Source0-md5:	ca1ae6120e6f4b4969f2d6cf94f47b42
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-configuration.patch
 Patch1:		%{name}-Makefile.patch
-Patch2:		%{name}-stdio.patch
 URL:		http://slim.berlios.de/
 BuildRequires:	freetype-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 2:1.4.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig >= 1:0.19
+BuildRequires:    rpmbuild(macros) >= 1.450
 BuildRequires:	xorg-lib-libXft-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXrender-devel
@@ -73,7 +73,6 @@ Możliwości:
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %{__make} \
@@ -85,15 +84,14 @@ Możliwości:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	CFGDIR=%{_sysconfdir}/X11/slim \
 	MANDIR=%{_mandir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -D %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-install -D %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
-install -d $RPM_BUILD_ROOT/etc/security
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig,security}
+install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 :> $RPM_BUILD_ROOT/etc/security/blacklist.slim
 
 %clean
@@ -101,13 +99,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add slim
-if [ -f /var/lock/subsys/slim ]; then
-	echo "Run \"/sbin/service slim restart\" to restart slim." >&2
-	echo "WARNING: it will terminate all sessions opened from slim!" >&2
-else
-	echo "Run \"/sbin/service slim start\" to start slim." >&2
-fi
-cat << EOF
+# -n option not to actually restart as it will terminate all sessions opened from slim!
+%service -n slim restart
+%banner -e %{name} <<EOF
 NOTE: You need to prepare ~/.xinitrc to make slim work.
 Take a look at %{_docdir}/%{name}-%{version}/xinitrc.example
 EOF
