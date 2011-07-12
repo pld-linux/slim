@@ -6,7 +6,7 @@ Summary:	SLiM - a desktop-independent graphical login manager
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
 Version:	1.3.2
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
@@ -27,7 +27,7 @@ BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXrender-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires:	mktemp
-Requires:	rc-scripts
+Requires:	rc-scripts >= 0.4.0.10
 Provides:	XDM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -100,7 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/chkconfig --add slim
 # -n option not to actually restart as it will terminate all sessions opened from slim!
-%service -n slim restart
+%service -n slim restart "SLiM Display Manager"
 %banner -e %{name} <<EOF
 NOTE: You need to prepare ~/.xinitrc to make slim work.
 Take a look at %{_docdir}/%{name}-%{version}/xinitrc.example
