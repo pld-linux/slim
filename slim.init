@@ -20,26 +20,38 @@ fi
 
 start() {
 	# Check if the service is already running?
-	if [ ! -f /var/lock/subsys/slim ]; then
-		msg_starting "SLiM Display Manager"
-		daemon --fork slim
-		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/slim
-	else
+	if [ -f /var/lock/subsys/slim ]; then
 		msg_already_running "SLiM Display Manager"
+		return
 	fi
+
+	msg_starting "SLiM Display Manager"
+	daemon --fork slim
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/slim
 }
 
 stop() {
-	if [ -f /var/lock/subsys/slim ]; then
-		msg_stopping "SLiM Display Manager"
-		killproc slim
-		rm -f /var/lock/subsys/slim
-	else
+	if [ ! -f /var/lock/subsys/slim ]; then
 		msg_not_running "SLiM Display Manager"
+		return
 	fi
+
+	msg_stopping "SLiM Display Manager"
+	killproc slim
+	rm -f /var/lock/subsys/slim
 }
 
+condrestart() {
+	if [ ! -f /var/lock/subsys/slim ]; then
+		msg_not_running "SLiM Display Manager"
+		RETVAL=$1
+		return
+	fi
+
+	stop
+	start
+}
 
 RETVAL=0
 # See how we were called.
@@ -50,16 +62,22 @@ case "$1" in
   stop)
   	stop
 	;;
+  restart)
+  	stop
+	start
+	;;
+  try-restart)
+	condrestart 0
+	;;
+  force-reload)
+	condrestart 7
+	;;
   status)
 	status slim
 	exit $?
 	;;
-  restart|force-reload)
-  	stop
-	start
-	;;
   *)
-	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|try-restart|force-reload|status}"
 	exit 3
 esac
 
