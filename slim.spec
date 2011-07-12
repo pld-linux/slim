@@ -21,7 +21,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 2:1.4.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig >= 1:0.19
-BuildRequires:    rpmbuild(macros) >= 1.450
+BuildRequires:	rpmbuild(macros) >= 1.450
 BuildRequires:	xorg-lib-libXft-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXrender-devel
@@ -120,6 +120,6 @@ fi
 %attr(754,root,root) /etc/rc.d/init.d/slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/slim
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/%{name}
 %{_mandir}/man1/slim.1*
 %{_datadir}/%{name}
