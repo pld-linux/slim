@@ -1,6 +1,15 @@
 diff -urN slim-1.3.0/slim.conf slim-1.3.0.config/slim.conf
 --- slim-1.3.0/slim.conf	2007-07-15 16:09:28.000000000 +0200
 +++ slim-1.3.0.config/slim.conf	2007-08-26 12:18:33.298886487 +0200
+@@ -5,7 +5,7 @@
+ #xserver_arguments   -dpi 75
+ 
+ # Commands for halt, login, etc.
+-halt_cmd            /sbin/shutdown -h now
++halt_cmd            /sbin/shutdown -h -P now
+ reboot_cmd          /sbin/shutdown -r now
+ console_cmd         /usr/bin/xterm -C -fg white -bg black +sb -T "Console login" -e /bin/sh -c "/bin/cat /etc/issue; exec /bin/login"
+ #suspend_cmd        /usr/sbin/suspend
 @@ -51,7 +51,7 @@
  # The current chosen session name is replaced in the login_cmd
  # above, so your login command can handle different sessions.
