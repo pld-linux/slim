@@ -6,13 +6,14 @@ Summary:	SLiM - a desktop-independent graphical login manager
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
 Version:	1.3.2
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
 # Source0-md5:	ca1ae6120e6f4b4969f2d6cf94f47b42
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
+Source3:	%{name}.service
 Patch0:		%{name}-configuration.patch
 Patch1:		%{name}-Makefile.patch
 URL:		http://slim.berlios.de/
@@ -69,6 +70,15 @@ Możliwości:
 - konfigurowalne komunikaty powitania / pożegnania,
 - losowy wybór motywu.
 
+%package systemd
+Summary:	systemd unit for slim
+Group:		Daemons
+Requires:	%{name} = %{version}-%{release}
+
+%description systemd
+systemd unit for slim.
+
+
 %prep
 %setup -q
 %patch0 -p1
@@ -94,6 +104,10 @@ install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 :> $RPM_BUILD_ROOT/etc/security/blacklist.slim
 
+# systemd
+install -d $RPM_BUILD_ROOT/%{systemdunitdir}
+cp -p %{SOURCE3} $RPM_BUILD_ROOT/%{systemdunitdir}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -112,6 +126,15 @@ if [ "$1" = "0" ]; then
 	%service slim stop
 fi
 
+%post systemd
+%systemd_post slim.service
+
+%preun systemd
+%systemd_preun slim.service
+
+%postun systemd
+%systemd_reload
+
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog README THEMES TODO xinitrc.sample
@@ -123,3 +146,7 @@ fi
 %attr(755,root,root) %{_bindir}/%{name}
 %{_mandir}/man1/slim.1*
 %{_datadir}/%{name}
+
+%files systemd
+%defattr(644,root,root,755)
+%{systemdunitdir}/slim.service
