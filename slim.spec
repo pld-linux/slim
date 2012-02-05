@@ -6,7 +6,7 @@ Summary:	SLiM - a desktop-independent graphical login manager
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
 Version:	1.3.2
-Release:	4
+Release:	5
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
@@ -29,6 +29,7 @@ BuildRequires:	xorg-lib-libXrender-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires:	mktemp
 Requires:	rc-scripts >= 0.4.0.10
+Requires:	systemd-units >= 0.38
 Provides:	XDM
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -70,15 +71,6 @@ Możliwości:
 - konfigurowalne komunikaty powitania / pożegnania,
 - losowy wybór motywu.
 
-%package systemd
-Summary:	systemd unit for slim
-Group:		Daemons
-Requires:	%{name} = %{version}-%{release}
-
-%description systemd
-systemd unit for slim.
-
-
 %prep
 %setup -q
 %patch0 -p1
@@ -115,6 +107,7 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --add slim
 # -n option not to actually restart as it will terminate all sessions opened from slim!
 %service -n slim restart "SLiM Display Manager"
+%systemd_post slim.service
 %banner -e %{name} <<EOF
 NOTE: You need to prepare ~/.xinitrc to make slim work.
 Take a look at %{_docdir}/%{name}-%{version}/xinitrc.example
@@ -125,20 +118,19 @@ if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del slim
 	%service slim stop
 fi
-
-%post systemd
-%systemd_post slim.service
-
-%preun systemd
 %systemd_preun slim.service
 
-%postun systemd
+%postun
 %systemd_reload
+
+%triggerpostun -- %{name} < 1.3.2-5
+%systemd_trigger slim.service
 
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog README THEMES TODO xinitrc.sample
 %dir %{_sysconfdir}/X11/slim
+%{systemdunitdir}/slim.service
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/slim/slim.conf
 %attr(754,root,root) /etc/rc.d/init.d/slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.slim
@@ -146,7 +138,3 @@ fi
 %attr(755,root,root) %{_bindir}/%{name}
 %{_mandir}/man1/slim.1*
 %{_datadir}/%{name}
-
-%files systemd
-%defattr(644,root,root,755)
-%{systemdunitdir}/slim.service
