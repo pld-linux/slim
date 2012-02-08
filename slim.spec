@@ -112,7 +112,8 @@ NORESTART=1
 %systemd_post slim.service
 %banner -e %{name} <<EOF
 NOTE: You need to prepare ~/.xinitrc to make slim work.
-Take a look at %{_docdir}/%{name}-%{version}/xinitrc.example
+Take a look at %{_docdir}/%{name}-%{version}/xinitrc.sample*
+
 EOF
 
 %preun
