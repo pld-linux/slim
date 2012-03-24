@@ -5,23 +5,23 @@
 Summary:	SLiM - a desktop-independent graphical login manager
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
-Version:	1.3.2
-Release:	10
+Version:	1.3.3
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
-# Source0-md5:	ca1ae6120e6f4b4969f2d6cf94f47b42
+# Source0-md5:	ce53e44c1e4a2eacf5bb7688ee2a5de8
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-configuration.patch
-Patch1:		%{name}-Makefile.patch
-Patch2:		%{name}-libpng15.patch
+Patch1:		cmake.patch
 URL:		http://slim.berlios.de/
 BuildRequires:	freetype-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 2:1.4.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig >= 1:0.19
+BuildRequires:	cmake
 BuildRequires:	rpmbuild(macros) >= 1.450
 BuildRequires:	xorg-lib-libXft-devel
 BuildRequires:	xorg-lib-libXmu-devel
@@ -77,19 +77,18 @@ Możliwości:
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
+install -d build
+cd build
+%cmake \
+	-DSYSCONF_INSTALL_DIR=%{_sysconfdir}/X11/slim \
+	..
 %{__make} \
-	CC="%{__cc}" \
-	CXX="%{__cxx}" \
-	CFLAGS="%{rpmcflags}" \
-	LDFLAGS="%{rpmldflags}" \
-	CFGDIR=%{_sysconfdir}/X11/slim
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install \
+%{__make} -C build install \
 	CFGDIR=%{_sysconfdir}/X11/slim \
 	MANDIR=%{_mandir} \
 	DESTDIR=$RPM_BUILD_ROOT
