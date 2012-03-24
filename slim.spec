@@ -94,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 	MANDIR=%{_mandir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/etc/sysconfig,security
+install -d $RPM_BUILD_ROOT/etc/security
 :> $RPM_BUILD_ROOT/etc/security/blacklist.slim
 
 # initscript
@@ -133,9 +133,9 @@ fi
 %defattr(644,root,root,755)
 %doc ChangeLog README THEMES TODO xinitrc.sample
 %dir %{_sysconfdir}/X11/slim
-%{systemdunitdir}/slim.service
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/slim/slim.conf
 %attr(754,root,root) /etc/rc.d/init.d/slim
+%{systemdunitdir}/slim.service
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/slim
 %attr(755,root,root) %{_bindir}/%{name}
