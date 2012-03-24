@@ -6,14 +6,13 @@ Summary:	SLiM - a desktop-independent graphical login manager
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
 Version:	1.3.2
-Release:	9
+Release:	10
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
 # Source0-md5:	ca1ae6120e6f4b4969f2d6cf94f47b42
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
-Source3:	%{name}.service
 Patch0:		%{name}-configuration.patch
 Patch1:		%{name}-Makefile.patch
 Patch2:		%{name}-libpng15.patch
@@ -31,6 +30,7 @@ Requires(post,preun):	/sbin/chkconfig
 Requires:	mktemp
 Requires:	rc-scripts >= 0.4.0.10
 Requires:	systemd-units >= 0.38
+Requires:	xinitrc-ng >= 1.0
 Provides:	XDM
 Obsoletes:	slim-systemd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -94,14 +94,17 @@ rm -rf $RPM_BUILD_ROOT
 	MANDIR=%{_mandir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT/etc/sysconfig,security
+:> $RPM_BUILD_ROOT/etc/security/blacklist.slim
+
+# initscript
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig,security}
 install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
-:> $RPM_BUILD_ROOT/etc/security/blacklist.slim
 
 # systemd
-install -d $RPM_BUILD_ROOT/%{systemdunitdir}
-cp -p %{SOURCE3} $RPM_BUILD_ROOT/%{systemdunitdir}
+install -d $RPM_BUILD_ROOT%{systemdunitdir}
+ln -s /dev/null $RPM_BUILD_ROOT%{systemdunitdir}/slim.service
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -110,26 +113,21 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --add slim
 # -n option not to actually restart as it will terminate all sessions opened from slim!
 %service -n slim restart "SLiM Display Manager"
-NORESTART=1
-%systemd_post slim.service
 %banner -e %{name} <<EOF
 NOTE: You need to prepare ~/.xinitrc to make slim work.
 Take a look at %{_docdir}/%{name}-%{version}/xinitrc.sample*
 
 EOF
+%systemd_reload
 
 %preun
 if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del slim
 	%service slim stop
 fi
-%systemd_preun slim.service
 
 %postun
 %systemd_reload
-
-%triggerpostun -- %{name} < 1.3.2-5
-%systemd_trigger slim.service
 
 %files
 %defattr(644,root,root,755)
