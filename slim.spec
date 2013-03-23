@@ -5,27 +5,33 @@
 Summary:	SLiM - a desktop-independent graphical login manager
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
-Version:	1.3.3
-Release:	2
+Version:	1.3.5
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
-# Source0-md5:	ce53e44c1e4a2eacf5bb7688ee2a5de8
+# Source0-md5:	1153e6993f9c9333e4cf745411d03472
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
+Source3:	%{name}.pamd
 Patch0:		%{name}-configuration.patch
 Patch1:		cmake.patch
 URL:		http://slim.berlios.de/
+BuildRequires:	ConsoleKit-devel
+BuildRequires:	cmake
+BuildRequires:	dbus-devel
+BuildRequires:	freeglut-devel
 BuildRequires:	freetype-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 2:1.4.0
 BuildRequires:	libstdc++-devel
+BuildRequires:	pam-devel
 BuildRequires:	pkgconfig >= 1:0.19
-BuildRequires:	cmake
 BuildRequires:	rpmbuild(macros) >= 1.450
 BuildRequires:	xorg-lib-libXft-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXrender-devel
+BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires(post,postun):	systemd-units >= 38
 Requires:	mktemp
@@ -83,19 +89,23 @@ Możliwości:
 install -d build
 cd build
 %cmake \
+	-DUSE_PAM=ON \
+	-DUSE_CONSOLEKIT=ON \
 	-DSYSCONF_INSTALL_DIR=%{_sysconfdir}/X11/slim \
 	..
-%{__make} \
+
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT/etc/{security,pam.d}
 %{__make} -C build install \
 	CFGDIR=%{_sysconfdir}/X11/slim \
 	MANDIR=%{_mandir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/etc/security
 :> $RPM_BUILD_ROOT/etc/security/blacklist.slim
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/slim
 
 # initscript
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig,security}
@@ -136,6 +146,7 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/X11/slim/slim.conf
 %attr(754,root,root) /etc/rc.d/init.d/slim
 %{systemdunitdir}/slim.service
+%config(noreplace) %verify(not md5 mtime size) /etc/pam.d/slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/slim
 %attr(755,root,root) %{_bindir}/%{name}
