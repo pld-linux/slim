@@ -14,7 +14,7 @@
  # i.e. for freebsd use:
  # login_cmd           exec /bin/sh - ~/.xinitrc %session
 -login_cmd           exec /bin/bash -login ~/.xinitrc %session
-+login_cmd           if [ -r ~/.xinitrc ]; then exec /bin/sh -login ~/.xinitrc %session; else exec /etc/X11/xinit/xinitrc %session; fi
++login_cmd           if [ -r ~/.xinitrc ]; then exec /bin/sh - ~/.xinitrc %session; else exec /etc/X11/xinit/xinitrc %session; fi
  
  # Commands executed when starting and exiting a session.
  # They can be used for registering a X11 session with
