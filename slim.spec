@@ -16,6 +16,7 @@ Source2:	%{name}.sysconfig
 Source3:	%{name}.pamd
 Patch0:		%{name}-configuration.patch
 Patch1:		cmake.patch
+Patch2:		default-session.patch
 URL:		http://slim.berlios.de/
 BuildRequires:	ConsoleKit-devel
 BuildRequires:	cmake
@@ -84,6 +85,7 @@ Możliwości:
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 install -d build
@@ -123,11 +125,6 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/chkconfig --add slim
 # -n option not to actually restart as it will terminate all sessions opened from slim!
 %service -n slim restart "SLiM Display Manager"
-%banner -e %{name} <<EOF
-NOTE: You need to prepare ~/.xinitrc to make slim work.
-Take a look at %{_docdir}/%{name}-%{version}/xinitrc.sample*
-
-EOF
 %systemd_reload
 
 %preun
