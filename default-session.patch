@@ -1,0 +1,11 @@
+--- slim-1.3.5/panel.cpp~	2012-12-31 14:03:42.000000000 +0100
++++ slim-1.3.5/panel.cpp	2013-03-26 12:13:59.251890696 +0100
+@@ -23,7 +23,7 @@
+ 	Root = root;
+ 	cfg = config;
+ 
+-	session = "";
++	session = cfg->nextSession("");
+ 
+ 	/* Init GC */
+ 	XGCValues gcv;
