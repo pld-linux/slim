@@ -5,18 +5,20 @@
 Summary:	SLiM - a desktop-independent graphical login manager
 Summary(pl.UTF-8):	SLiM - niezależny od środowiska graficzny zarządca logowania
 Name:		slim
-Version:	1.3.5
-Release:	4
+Version:	1.3.6
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://download.berlios.de/slim/%{name}-%{version}.tar.gz
-# Source0-md5:	1153e6993f9c9333e4cf745411d03472
+# Source0-md5:	d40d256394f9ef34cef34d2aa9cb52e6
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.pamd
 Patch0:		%{name}-configuration.patch
 Patch1:		cmake.patch
 Patch2:		default-session.patch
+Patch3:		%{name}-boolean_conflict.patch
+Patch4:		%{name}-link.patch
 URL:		http://slim.berlios.de/
 BuildRequires:	ConsoleKit-devel
 BuildRequires:	cmake
@@ -86,6 +88,8 @@ Możliwości:
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 install -d build
@@ -116,7 +120,9 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 
 # systemd
 install -d $RPM_BUILD_ROOT%{systemdunitdir}
-ln -s /dev/null $RPM_BUILD_ROOT%{systemdunitdir}/slim.service
+ln -sf /dev/null $RPM_BUILD_ROOT%{systemdunitdir}/slim.service
+
+rm $RPM_BUILD_ROOT%{_libdir}/libslim.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -147,5 +153,8 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.slim
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/slim
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_bindir}/%{name}lock
+%attr(755,root,root) %{_libdir}/libslim.so.*.*.*
 %{_mandir}/man1/slim.1*
+%{_mandir}/man1/slimlock.1*
 %{_datadir}/%{name}
